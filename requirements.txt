@@ -1,5 +1,5 @@
 numpy
 pandas
-pytest
-pillow
 scikit-learn
+matplotlib
+seaborn
