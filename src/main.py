@@ -8,56 +8,59 @@ from metricas import acuracia, mse, validacao_cruzada, matriz_confusao
 from sklearn.preprocessing import OneHotEncoder
 
 
-# Carregar o dataset Iris
-base_dir = os.path.dirname(__file__)  # Caminho da pasta onde está o script
-
+# Carregar o dataset de caracteres
+base_dir = os.path.dirname(__file__)
 X = np.load(os.path.join(base_dir, 'X.npy'))
 y = np.load(os.path.join(base_dir, 'Y_classe.npy'))
 
-print(f"Data set caracteres X: {X}, y: {y}")
+print("Shape original de X:", X.shape)
 
-# Dividir entre treino e teste
+X = X.reshape(X.shape[0], -1)  # Flatten
+print("Shape ajustado de X para a MLP:", X.shape)
+
+# Normalizar
+scaler = StandardScaler()
+X = scaler.fit_transform(X)
+
+# Dividir dados
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# One-hot encode dos rótulos
+# One-hot encoding dos rótulos
 onehot_encoder = OneHotEncoder(sparse_output=False)
-y_train_reshaped = y_train.reshape(-1, 1)
-y_train_onehot = onehot_encoder.fit_transform(y_train_reshaped)
+y_train_onehot = onehot_encoder.fit_transform(y_train.reshape(-1, 1))
 
-# Definindo os parâmetros da rede
-input_size = X_train.shape[1]  # 4
-hidden_layers = 5  # Pode ser 5 neurônios escondidos
-output_size = len(np.unique(y))  # 3 classes (0, 1, 2)
+# Parâmetros da MLP
+input_size = X_train.shape[1]
+hidden_layers = 5
+output_size = len(np.unique(y))
 
-# Instanciar e treinar a MLP
-mlp = MLP(input_size,hidden_layers, output_size, taxa_aprendizado=0.01, epocas=20000)
+mlp = MLP(input_size, hidden_layers, output_size, taxa_aprendizado=0.01, epocas=20000)
 
 print("Iniciando o treinamento...")
 errors = mlp.fit(X_train, y_train_onehot)
 
-# Fazer predições
+# Predição
 y_pred_probs = mlp.predict(X_test)
-y_pred = np.argmax(y_pred_probs, axis=1)  # Pegar a classe de maior probabilidade
+y_pred = np.argmax(y_pred_probs, axis=1)
 
-# Avaliar
+# Avaliação
 acc = acuracia(y_test, y_pred)
 print(f"Acurácia no conjunto de teste: {acc * 100:.2f}%")
 
-# Validação Cruzada
-
-validacao_cruzada(x_treino=X_train,
-                  k_folds=5, 
-                  y_treino=y_train_onehot, 
-                  model_params={
+# Validação cruzada
+validacao_cruzada(
+    x_treino=X_train,
+    k_folds=5,
+    y_treino=y_train_onehot,
+    model_params={
         "tamanho_entrada": input_size,
         "camadas_escondidas": hidden_layers,
         "tamanho_saida": output_size,
         "taxa_aprendizado": 0.01,
         "epocas": 20000
-    })
+    }
+)
 
-matriz_confusao(y_test,y_pred)
-
-# Gerar relatório
+matriz_confusao(y_test, y_pred)
 mlp.relatorio_final(errors, X_test, y_test)
 print("Treinamento e teste concluídos.")
