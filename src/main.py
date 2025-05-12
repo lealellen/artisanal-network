@@ -27,7 +27,10 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 # One-hot encoding dos rótulos
 onehot_encoder = OneHotEncoder(sparse_output=False)
-y_train_onehot = onehot_encoder.fit_transform(y_train.reshape(-1, 1))
+y_train_onehot = pd.get_dummies(y_train).values
+
+print("Shape de X_train:", X_train.shape)
+print("Shape de y_train_onehot:", y_train_onehot.shape)
 
 # Parâmetros da MLP
 input_size = X_train.shape[1]
