@@ -80,7 +80,15 @@ def matriz_confusao(y_true, y_pred, labels=None):
     np.ndarray: Matriz de confusão.
     """
     
-     #Identificar classes únicas
+    # Se y_true estiver em one-hot encoding, converte para rótulos
+    if y_true.ndim > 1:
+        y_true = np.argmax(y_true, axis=1)
+    
+    # Se y_pred não estiver em formato de rótulo, converte de probabilidades para rótulos
+    if y_pred.ndim > 1:
+        y_pred = np.argmax(y_pred, axis=1)
+    
+    # Identificar classes únicas
     if labels is None:
         labels = np.unique(np.concatenate((y_true, y_pred)))
     n_classes = len(labels)
