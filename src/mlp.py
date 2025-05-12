@@ -5,7 +5,7 @@ import random
 # Vamos usar o random para inicializar os pesos com valores aleatórios, o que garante que a rede não comece sempre do mesmo jeito
 
 class MLP:
-    def __init__(self, tamanho_entrada, camadas_escondidas, tamanho_saida, taxa_aprendizado=0.01, epocas=1000):
+    def __init__(self, tamanho_entrada, camadas_escondidas, tamanho_saida, taxa_aprendizado=0.01, epocas=1000, parada_antecipada=True):
         """
         Inicializa a rede MLP com os parâmetros fornecidos.
 
@@ -21,6 +21,7 @@ class MLP:
         self.tamanho_entrada = tamanho_entrada
         self.camadas_escondidas = camadas_escondidas
         self.tamanho_saida = tamanho_saida
+        self.parada_antecipada = parada_antecipada
 
         # Inicialização dos pesos e bias com valores aleatórios entre -1 e 1
         self.pesos_entrada = np.random.uniform(-1, 1, size=(self.tamanho_entrada, self.camadas_escondidas))
@@ -81,18 +82,19 @@ class MLP:
             perda = np.mean(np.square(erro))
             erros.append(perda)
 
-            if epoca % 100 == 0:
-                print(f"Época {epoca}/{self.epocas}, Erro: {perda:.6f}")
+            if self.parada_antecipada:
+                if epoca % 100 == 0:
+                    print(f"Época {epoca}/{self.epocas}, Erro: {perda:.6f}")
 
-            if perda < melhor_erro:
-                melhor_erro = perda
-                epocas_sem_melhora = 0
-            else:
-                epocas_sem_melhora += 1
+                if perda < melhor_erro:
+                    melhor_erro = perda
+                    epocas_sem_melhora = 0
+                else:
+                    epocas_sem_melhora += 1
 
-            if epocas_sem_melhora >= paciencia:
-                print(f"Parada antecipada na época {epoca}")
-                break
+                if epocas_sem_melhora >= paciencia:
+                    print(f"Parada antecipada na época {epoca}")
+                    break
         return erros
 
     def predict(self, X):
