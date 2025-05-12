@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from mlp import MLP
@@ -9,9 +8,10 @@ from sklearn.preprocessing import OneHotEncoder
 
 
 # Carregar o dataset Iris
-iris = load_iris()
-X = iris.data  # 4 features por flor
-y = iris.target  # 0, 1, 2
+X = np.load('X.npy')  # 4 features por flor
+y = np.load('Y_classe.npy')  # 0, 1, 2
+
+print(f"Data set caracteres X: {X}, y: {y}")
 
 # Dividir entre treino e teste
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
