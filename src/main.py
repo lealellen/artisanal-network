@@ -28,7 +28,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 # Parâmetros da MLP
 input_size = X_train.shape[1]
 hidden_layers = 5
-output_size = len(np.unique(y))
+output_size = 26
 
 mlp = MLP(input_size, hidden_layers, output_size, taxa_aprendizado=0.01, epocas=20000)
 
