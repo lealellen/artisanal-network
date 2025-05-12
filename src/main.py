@@ -5,7 +5,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from mlp import MLP
 from metricas import acuracia, mse, validacao_cruzada, matriz_confusao
-from sklearn.preprocessing import OneHotEncoder
 
 
 # Carregar o dataset de caracteres
@@ -30,7 +29,7 @@ input_size = X_train.shape[1]
 hidden_layers = 5
 output_size = 26
 
-mlp = MLP(input_size, hidden_layers, output_size, taxa_aprendizado=0.01, epocas=20000)
+mlp = MLP(input_size, hidden_layers, output_size, taxa_aprendizado=0.01, epocas=20000, validacao_cruzada=False)
 
 print("Iniciando o treinamento...")
 errors = mlp.fit(X_train, y_train)
