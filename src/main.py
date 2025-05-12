@@ -29,7 +29,7 @@ input_size = X_train.shape[1]
 hidden_layers = 5
 output_size = 26
 
-mlp = MLP(input_size, hidden_layers, output_size, taxa_aprendizado=0.01, epocas=20000, validacao_cruzada=False)
+mlp = MLP(input_size, hidden_layers, output_size, taxa_aprendizado=0.01, epocas=20000, parada_antecipada=False)
 
 print("Iniciando o treinamento...")
 errors = mlp.fit(X_train, y_train)
@@ -43,7 +43,7 @@ acc = acuracia(y_test, y_pred)
 print(f"Acurácia no conjunto de teste: {acc * 100:.2f}%")
 
 # Validação cruzada
-validacao_cruzada(
+"""validacao_cruzada(
     x_treino=X_train,
     k_folds=5,
     y_treino=y_train,
@@ -54,7 +54,7 @@ validacao_cruzada(
         "taxa_aprendizado": 0.01,
         "epocas": 20000
     }
-)
+)"""
 
 matriz_confusao(y_test, y_pred)
 mlp.relatorio_final(errors, X_test, y_test)
