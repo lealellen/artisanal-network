@@ -8,7 +8,10 @@ from mlp import MLP
 
 def acuracia(y_verdadeiro, y_predito):
     """Calcula a acurácia das previsões"""
-    predicoes_corretas = np.sum(y_verdadeiro == y_predito)
+    y_verdadeiro_indices = np.argmax(y_verdadeiro, axis=1)
+    
+    # Comparando as previsões com as classes verdadeiras
+    predicoes_corretas = np.sum(y_verdadeiro_indices == y_predito)
     return predicoes_corretas / len(y_verdadeiro)
 
 # Métrica: erro quadrático médio (MSE)
