@@ -1,4 +1,5 @@
 import numpy as np
+import os
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -8,8 +9,10 @@ from sklearn.preprocessing import OneHotEncoder
 
 
 # Carregar o dataset Iris
-X = np.load('X.npy')  # 4 features por flor
-y = np.load('Y_classe.npy')  # 0, 1, 2
+base_dir = os.path.dirname(__file__)  # Caminho da pasta onde está o script
+
+X = np.load(os.path.join(base_dir, 'X.npy'))
+y = np.load(os.path.join(base_dir, 'Y_classe.npy'))
 
 print(f"Data set caracteres X: {X}, y: {y}")
 
