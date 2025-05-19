@@ -1,4 +1,4 @@
-# Projeto MLP para Reconhecimento de Caracteres
+# Projeto MLP para Reconhecimento de Caracteres 
 
 Este projeto implementa uma Rede Neural Perceptron Multicamadas (MLP) para classificação de caracteres a partir de um conjunto de dados de imagens. O sistema realiza o treinamento da rede, avaliação por métricas como acurácia e matriz de confusão, além de gerar relatórios e arquivos auxiliares para análise dos resultados.
 
@@ -78,7 +78,4 @@ Funções para avaliar o desempenho do modelo:
   - matplotlib
   - seaborn
 
-Você pode instalar as dependências com:
 
-```bash
-pip install numpy pandas scikit-learn matplotlib seaborn
