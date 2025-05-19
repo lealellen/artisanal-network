@@ -1,0 +1,3 @@
+Épocas: 20000
+
+Erro por Época:

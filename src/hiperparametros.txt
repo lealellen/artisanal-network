@@ -1,0 +1,5 @@
+Hiperparâmetros Finais e de Inicialização
+Tamanho Entrada: 120
+Camadas Ocultas: 5
+Tamanho Saída: 26
+
