@@ -119,6 +119,7 @@ class MLP:
             f.write(f"Tamanho Entrada: {self.tamanho_entrada}\n")
             f.write(f"Camadas Ocultas: {self.camadas_escondidas}\n")
             f.write(f"Tamanho Saída: {self.tamanho_saida}\n\n")
+            f.write(f"Tamanho Taxa de aprendizado: {self.taxa_aprendizado}\n\n")
 
         # Salvando pesos finais
         with open("pesosfinais.txt", "w") as f:
